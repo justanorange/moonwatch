@@ -1,26 +1,23 @@
 <script setup lang="ts">
-import Age from '@features/moon-info-widgets/ui/Age.vue';
-import CurrentPhase from '@features/moon-info-widgets/ui/CurrentPhase.vue';
-import NextPhase from '@features/moon-info-widgets/ui/NextPhase.vue';
-import ZodiacSign from '@features/moon-info-widgets/ui/ZodiacSign.vue';
-import { useMoonData } from '@entities/moon/lib/use-moon-data';
-
-const moonData = useMoonData();
+import MoonAgeWidget from '@features/moon-info-widget/ui/MoonAgeWidget.vue';
+import MoonCurrentPhaseWidget from '@features/moon-info-widget/ui/MoonCurrentPhaseWidget.vue';
+import MoonNextPhaseWidget from '@features/moon-info-widget/ui/MoonNextPhaseWidget.vue';
+import MoonZodiacSignWidget from '@features/moon-info-widget/ui/MoonZodiacSignWidget.vue';
 </script>
 
 <template>
   <div class="info-overlay">
     <div class="info-content top-left">
-      <CurrentPhase :moonData="moonData" />
+      <MoonCurrentPhaseWidget />
     </div>
     <div class="info-content top-right">
-      <ZodiacSign :moonData="moonData" />
+      <MoonZodiacSignWidget />
     </div>
     <div class="info-content bottom-left">
-      <Age :moonData="moonData" />
+      <MoonAgeWidget />
     </div>
     <div class="info-content bottom-right">
-      <NextPhase :moonData="moonData" />
+      <MoonNextPhaseWidget />
     </div>
   </div>
 </template>

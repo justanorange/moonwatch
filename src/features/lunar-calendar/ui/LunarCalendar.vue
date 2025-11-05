@@ -1,96 +1,16 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-
 import MoonPhaseIcon from './MoonPhaseIcon.vue';
+import { useCalendar } from '../lib/use-calendar';
 
-const currentDate = ref(new Date());
-const selectedDate = ref(new Date());
-
-const weekDays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
-
-const currentMonthYear = computed(() => {
-  return currentDate.value.toLocaleDateString('ru-RU', { 
-    month: 'long', 
-    year: 'numeric' 
-  });
-});
-
-const calendarDays = computed(() => {
-  const year = currentDate.value.getFullYear();
-  const month = currentDate.value.getMonth();
-  
-  const firstDay = new Date(year, month, 1);
-  const lastDay = new Date(year, month + 1, 0);
-  
-  const firstDayOfWeek = firstDay.getDay() || 7;
-  
-  const days = [];
-
-  for (let i = firstDayOfWeek - 2; i >= 0; i--) {
-    const date = new Date(year, month, -i);
-    days.push(createCalendarDay(date, false));
-  }
-
-  for (let day = 1; day <= lastDay.getDate(); day++) {
-    const date = new Date(year, month, day);
-    days.push(createCalendarDay(date, true));
-  }
-
-  const totalCells = 42; // 7 days x 6 weeks max
-  const nextMonthDays = totalCells - days.length;
-  for (let day = 1; day <= nextMonthDays; day++) {
-    const date = new Date(year, month + 1, day);
-    days.push(createCalendarDay(date, false));
-  }
-
-  return days;
-});
-
-interface CalendarDay {
-  date: Date;
-  dayNumber: number;
-  isCurrentMonth: boolean;
-  isToday: boolean;
-  isSelected: boolean;
-}
-
-const createCalendarDay = (date: Date, isCurrentMonth: boolean): CalendarDay => {
-  const today = new Date();
-  
-  return {
-    date,
-    dayNumber: date.getDate(),
-    isCurrentMonth,
-    isToday: date.getDate() === today.getDate() && 
-             date.getMonth() === today.getMonth() && 
-             date.getFullYear() === today.getFullYear(),
-    isSelected: date.getDate() === selectedDate.value.getDate() && 
-                date.getMonth() === selectedDate.value.getMonth() && 
-                date.getFullYear() === selectedDate.value.getFullYear()
-  };
-};
-
-const prevMonth = () => {
-  currentDate.value = new Date(
-    currentDate.value.getFullYear(),
-    currentDate.value.getMonth() - 1,
-    1
-  );
-};
-
-const nextMonth = () => {
-  currentDate.value = new Date(
-    currentDate.value.getFullYear(),
-    currentDate.value.getMonth() + 1,
-    1
-  );
-};
-
-const selectDate = (date: Date) => {
-  selectedDate.value = date;
-};
+const {
+  weekDays,
+  currentMonthYear,
+  calendarDays,
+  prevMonth,
+  nextMonth,
+  selectDate,
+} = useCalendar();
 </script>
-
 <template>
   <div class="lunar-calendar">
     <div class="calendar-header">

@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import type { useMoonData } from '@entities/moon/lib/use-moon-data';
+import { useMoonData } from '@entities/moon';
 import { pluralizeDays } from '@shared/lib/pluralize/pluralize-days';
 
-const props = defineProps<{
-  moonData: ReturnType<typeof useMoonData>;
-}>();
-const moonData = props.moonData;
+const moonData = useMoonData();
 
 const getNextPhaseInfo = () => {
   if (!moonData.nextPhase || !moonData.nextPhase.nextPhaseData) {

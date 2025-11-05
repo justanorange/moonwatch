@@ -1,6 +1,10 @@
 import { SIDEREAL_MONTH } from '@shared/lib/astronomy/constants';
 import { daysBetween } from '@shared/lib/dates/calculations';
 
+/**
+ * Массив объектов, представляющих знаки зодиака.
+ * Используется для определения положения Луны.
+ */
 export const SIGNS = [
   { 
     name: 'Овен',
@@ -76,10 +80,18 @@ export const SIGNS = [
   }
 ];
 
+/**
+ * Определяет знак зодиака, в котором находится Луна в указанную дату.
+ * Расчет основан на сидерическом месяце.
+ * @param date - Дата, для которой производится расчет.
+ * @returns Объект, представляющий знак зодиака.
+ */
 export const getMoonZodiacSign = (date = new Date()) => {
-  const knownMoonInAries = new Date(Date.UTC(2000, 0, 1, 0, 0)); // Луна в Овне
+  // Точка отсчета: известная дата, когда Луна была в Овне.
+  const knownMoonInAries = new Date(Date.UTC(2000, 0, 1, 0, 0));
   
   const daysFromAries = daysBetween(date, knownMoonInAries);
+  // Определяем индекс знака, основываясь на прошедшем времени и длине сидерического месяца.
   const signIndex = Math.floor((daysFromAries % SIDEREAL_MONTH) / SIDEREAL_MONTH * 12);
   
   return SIGNS[signIndex];

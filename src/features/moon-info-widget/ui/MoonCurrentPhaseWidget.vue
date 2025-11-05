@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import type { useMoonData } from '@entities/moon/lib/use-moon-data';
+import { useMoonData } from '@entities/moon';
 import { computed } from 'vue';
 import { LUNAR_DISTANCE_KM, LUNAR_ECCENTRICITY } from '@shared/lib/astronomy/constants';
 
-const props = defineProps<{
-  moonData: ReturnType<typeof useMoonData>;
-}>();
-const moonData = props.moonData;
+const moonData = useMoonData();
 
 const isSupermoon = computed(() => {
   if (!moonData) return false;

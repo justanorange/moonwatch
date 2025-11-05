@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMoonData } from '@entities/moon/lib/use-moon-data';
+import { useMoonData } from '@entities/moon';
 
 const moonData = useMoonData();
 </script>
