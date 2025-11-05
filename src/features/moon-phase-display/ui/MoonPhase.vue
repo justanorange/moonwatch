@@ -6,7 +6,7 @@ const moonData = useMoonData();
 
 <template>
   <div class="moon-phase">
-    {{ moonData?.phaseData?.emoji }}
+    {{ moonData?.currentPhase?.phase.emoji }}
   </div>
 </template>
 

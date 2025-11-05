@@ -1,62 +1,70 @@
-export interface MoonPhase {
+export interface MoonPhaseData {
   name: string;
-  range: [number, number];
   description: string;
   emoji: string;
+  important?: boolean;
+  exactValue: number;
+  range: [number, number];
 }
 
-export interface MoonPhases {
-  [key: string]: MoonPhase;
-}
-
-export const MOON_PHASES: MoonPhases = {
+export const MOON_PHASES: Record<string, MoonPhaseData> = {
   NEW: {
     name: 'Новолуние',
-    range: [0, 0.03],
-    description: 'Луна не видна',
-    emoji: '🌑'
+    description: 'Новолуние',
+    emoji: '🌑',
+    important: true,
+    exactValue: 0.0,
+    range: [0.96, 0.04],
   },
   WAXING_CRESCENT: {
-    name: 'Растущий серп', 
-    range: [0.03, 0.23],
+    name: 'Растущий серп',
     description: 'Тонкий серп растущей луны',
-    emoji: '🌒'
+    emoji: '🌒',
+    exactValue: 0.125,
+    range: [0.04, 0.21],
   },
   FIRST_QUARTER: {
     name: 'Первая четверть',
-    range: [0.23, 0.27],
     description: 'Освещена правая половина',
-    emoji: '🌓'
+    emoji: '🌓',
+    exactValue: 0.25,
+    range: [0.21, 0.29],
   },
   WAXING_GIBBOUS: {
     name: 'Прибывающая луна',
-    range: [0.27, 0.47],
     description: 'Больше половины освещено',
-    emoji: '🌔'
+    emoji: '🌔',
+    exactValue: 0.375,
+    range: [0.29, 0.46],
   },
   FULL: {
     name: 'Полнолуние',
-    range: [0.47, 0.53],
     description: 'Полностью освещена',
-    emoji: '🌕'
+    emoji: '🌕',
+    important: true,
+    exactValue: 0.5,
+    range: [0.46, 0.54],
   },
   WANING_GIBBOUS: {
-    name: 'Убывающая луна', 
-    range: [0.53, 0.72],
+    name: 'Убывающая луна',
     description: 'Начинает уменьшаться',
-    emoji: '🌖'
+    emoji: '🌖',
+    exactValue: 0.625,
+    range: [0.54, 0.71],
   },
   LAST_QUARTER: {
     name: 'Последняя четверть',
-    range: [0.72, 0.77],
     description: 'Освещена левая половина',
-    emoji: '🌗'
+    emoji: '🌗',
+    exactValue: 0.75,
+    range: [0.71, 0.79],
   },
   WANING_CRESCENT: {
     name: 'Старая луна',
-    range: [0.77, 0.97],
     description: 'Тонкий серп перед новолунием',
-    emoji: '🌘'
+    emoji: '🌘',
+    exactValue: 0.875,
+    range: [0.79, 0.96],
   }
 };
 

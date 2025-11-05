@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { getPhaseByValue } from '@entities/moon';
-import { computed } from 'vue';
+import { useMoonData } from '@entities/moon';
+import { computed, type PropType } from 'vue';
 
 const props = defineProps({
-  phase: {
-    type: Number,
+  date: {
+    type: Object as PropType<Date>,
     required: true
   },
   size: {
@@ -13,23 +13,24 @@ const props = defineProps({
   }
 });
 
-const phaseData = computed(() => {
-  return getPhaseByValue(props.phase);
-});
+const moonData = computed(() => useMoonData(props.date));
+
+const emoji = computed(() => moonData.value.currentPhase?.phase.emoji ?? '');
+const isHighlighted = computed(() => moonData.value.event !== null);
 </script>
 
 <template>
   <div 
     class="moon-phase-icon"
     :class="{
-      'moon-phase-icon--highlighted': phase >= 0.97 || phase <= 0.03 || (phase >= 0.47 && phase <= 0.53)
+      'moon-phase-icon--highlighted': isHighlighted
     }"
     :style="{
       width: size + 'px',
       height: size + 'px'
     }"
   >
-    {{ phaseData?.emoji }}
+    {{ emoji }}
   </div>
 </template>
 

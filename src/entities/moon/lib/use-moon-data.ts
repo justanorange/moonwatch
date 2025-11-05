@@ -1,6 +1,6 @@
 import {
   getMoonPhase,
-  getPhaseByValue,
+  getDayPhaseInfo,
   getNextPhase,
   getMoonAge,
   getMoonZodiacSign,
@@ -9,15 +9,17 @@ import {
 } from '../model';
 
 export const useMoonData = (date = new Date()) => {
-  const phase = getMoonPhase(date);
+  const phaseInfo = getDayPhaseInfo(date);
+  const currentPhase = getMoonPhase(date);
   
   return {
-    phase,
-    phaseData: getPhaseByValue(phase),
+    // Данные о текущей фазе и событиях
+    ...phaseInfo,
+    // Дополнительная информация о луне
     nextPhase: getNextPhase(date),
     age: getMoonAge(date),
     zodiacSign: getMoonZodiacSign(date),
-    moonDistance: getMoonDistance(phase),
-    moonIllumination: getMoonIllumination(phase),
+    moonDistance: getMoonDistance(currentPhase),
+    moonIllumination: getMoonIllumination(currentPhase),
   };
 };

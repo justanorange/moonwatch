@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { useMoonData } from '@entities/moon';
+
 import MoonPhaseIcon from './MoonPhaseIcon.vue';
 
 const currentDate = ref(new Date());
@@ -46,17 +46,27 @@ const calendarDays = computed(() => {
   return days;
 });
 
-const createCalendarDay = (date: Date, isCurrentMonth: boolean) => {
-  const moonData = useMoonData(date);
+interface CalendarDay {
+  date: Date;
+  dayNumber: number;
+  isCurrentMonth: boolean;
+  isToday: boolean;
+  isSelected: boolean;
+}
+
+const createCalendarDay = (date: Date, isCurrentMonth: boolean): CalendarDay => {
   const today = new Date();
   
   return {
     date,
     dayNumber: date.getDate(),
     isCurrentMonth,
-    isToday: date.toDateString() === today.toDateString(),
-    isSelected: date.toDateString() === selectedDate.value.toDateString(),
-    moonPhase: moonData.phase,
+    isToday: date.getDate() === today.getDate() && 
+             date.getMonth() === today.getMonth() && 
+             date.getFullYear() === today.getFullYear(),
+    isSelected: date.getDate() === selectedDate.value.getDate() && 
+                date.getMonth() === selectedDate.value.getMonth() && 
+                date.getFullYear() === selectedDate.value.getFullYear()
   };
 };
 
@@ -111,7 +121,10 @@ const selectDate = (date: Date) => {
       >
         <div class="day-number">{{ day.dayNumber }}</div>
         <div class="moon-phase">
-          <MoonPhaseIcon :phase="day.moonPhase" :size="12" />
+          <MoonPhaseIcon 
+            :date="day.date"
+            :size="12" 
+          />
         </div>
       </div>
     </div>

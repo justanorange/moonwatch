@@ -1,31 +1,27 @@
 <script setup lang="ts">
+import Age from '@features/moon-info-widgets/ui/Age.vue';
+import CurrentPhase from '@features/moon-info-widgets/ui/CurrentPhase.vue';
+import NextPhase from '@features/moon-info-widgets/ui/NextPhase.vue';
+import ZodiacSign from '@features/moon-info-widgets/ui/ZodiacSign.vue';
 import { useMoonData } from '@entities/moon/lib/use-moon-data';
-import { usePluralize } from '@shared/lib/pluralize/use-pluralize';
 
 const moonData = useMoonData();
-const { pluralize } = usePluralize();
-
-const pluralizeDays = (count: number): string => {
-  return pluralize(count, {
-    one: 'день',
-    few: 'дня', 
-    many: 'дней'
-  });
-};
 </script>
 
 <template>
   <div class="info-overlay">
     <div class="info-content top-left">
-      <div>{{ moonData?.phaseData?.name }}</div>
+      <CurrentPhase :moonData="moonData" />
     </div>
     <div class="info-content top-right">
-      <div>{{ moonData?.zodiacSign?.emoji }} {{ moonData?.zodiacSign?.name }}</div>
+      <ZodiacSign :moonData="moonData" />
     </div>
     <div class="info-content bottom-left">
-      <div>🕒 {{ pluralizeDays(Math.floor(moonData.age)) }}</div>
+      <Age :moonData="moonData" />
     </div>
-    <div class="info-content bottom-right">{{ moonData?.nextPhase?.nextPhaseData?.emoji }} через {{ pluralizeDays(moonData.nextPhase.days) }}</div>
+    <div class="info-content bottom-right">
+      <NextPhase :moonData="moonData" />
+    </div>
   </div>
 </template>
 
